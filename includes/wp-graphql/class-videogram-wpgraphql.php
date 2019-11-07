@@ -24,6 +24,19 @@ class Videogram_WPGraphQL {
 	];
 
 	/**
+	 * Taxonomies to expose
+	 * 
+	 * @var array
+	 */
+	public $taxonomies = [
+		[
+			'taxonomy'    => 'video-category',
+			'single_name' => 'VideoCategory',
+			'plural_name' => 'VideoCategories',
+		],
+	];
+
+	/**
 	 * Custom fields to expose
 	 *
 	 * @var array
@@ -46,7 +59,7 @@ class Videogram_WPGraphQL {
 	/**
 	 * Register post types
 	 *
-	 * @param array  $args Post type arg.
+	 * @param array  $args Post type args.
 	 * @param string $post_type Post type name.
 	 *
 	 * @return array $args Filtered post type args.
@@ -62,6 +75,28 @@ class Videogram_WPGraphQL {
 		}
 
 		return $args;
+	}
+
+	/**
+	 * Register taxonomies
+	 * 
+	 * @param array  $args Taxonomy args.
+	 * @param string $taxonomy Taxonomy name.
+	 *
+	 * @return array $args Filtered taxonomy args.
+	 */
+	public function expose_taxonomy( $args, $taxonomy ) {
+
+		foreach ( $this->taxonomies as $tax ) {
+			if ( $tax['taxonomy'] === $taxonomy ) {
+				$args['show_in_graphql']     = true;
+				$args['graphql_single_name'] = $tax['single_name'];
+				$args['graphql_plural_name'] = $tax['plural_name'];
+			}
+		}
+
+		return $args;
+
 	}
 
 	/**

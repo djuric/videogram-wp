@@ -141,15 +141,12 @@ class Videogram_Admin {
 	 */
 	public function register_taxonomies() {
 		$args = [
-			'hierarchical'        => true,
-			'labels'              => [
+			'hierarchical' => true,
+			'labels'       => [
 				'name'          => __( 'Video Categories', 'videogram' ),
 				'singular_name' => __( 'Video Category', 'videogram' ),
 			],
-			'show_in_rest'        => true,
-			'show_in_graphql'     => true,
-			'graphql_single_name' => 'VideoCategory',
-			'graphql_plural_name' => 'VideoCategories',
+			'show_in_rest' => true,
 		];
 
 		register_taxonomy( 'video-category', VIDEOGRAM_VIDEO_POST_TYPE, $args );
