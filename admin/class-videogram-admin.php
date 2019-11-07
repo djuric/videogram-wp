@@ -111,7 +111,7 @@ class Videogram_Admin {
 		register_post_type(
 			VIDEOGRAM_VIDEO_POST_TYPE,
 			[
-				'labels'                   => [
+				'labels'             => [
 					'name'          => __( 'Videos', 'videogram' ),
 					'singular_name' => __( 'Video', 'videogram' ),
 					'add_new_item'  => __( 'Add New Video', 'videogram' ),
@@ -120,16 +120,16 @@ class Videogram_Admin {
 					'all_items'     => __( 'All Videos', 'videogram' ),
 					'search_items'  => __( 'Search Videos', 'videogram' ),
 				],
-				'public'                   => true,
-				'publicly_queryable'       => true,
-				'menu_position'            => 7,
-				'menu_icon'                => 'dashicons-video-alt3',
-				'rewrite'                  => [
+				'public'             => true,
+				'publicly_queryable' => true,
+				'menu_position'      => 7,
+				'menu_icon'          => 'dashicons-video-alt3',
+				'rewrite'            => [
 					'slug' => 'video',
 				],
-				'supports'                 => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments' ],
-				'show_in_rest'             => true,
-				'template' => [
+				'supports'           => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments' ],
+				'show_in_rest'       => true,
+				'template'           => [
 					[ 'videogram/video' ],
 				],
 			]
