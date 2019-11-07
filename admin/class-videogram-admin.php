@@ -129,13 +129,9 @@ class Videogram_Admin {
 				],
 				'supports'                 => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments' ],
 				'show_in_rest'             => true,
-				/*
-							  'show_in_graphql'     => true,
-								'graphql_single_name' => 'Video',
-								'graphql_plural_name' => 'Videos', */
-								'template' => [
-									[ 'videogram/video' ],
-								],
+				'template' => [
+					[ 'videogram/video' ],
+				],
 			]
 		);
 	}

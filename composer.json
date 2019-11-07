@@ -1,0 +1,14 @@
+{
+  "name": "videogram/wp",
+  "description": "WordPress plugin for back-end videos",
+  "type": "project",
+  "license": "GPL-2.0+",
+  "require": {},
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+    "wp-coding-standards/wpcs": "2.1.1",
+    "sirbrillig/phpcs-variable-analysis": "2.6.4",
+    "phpcompatibility/phpcompatibility-wp": "2.0.0",
+    "automattic/vipwpcs": "^2.0"
+  }
+}
