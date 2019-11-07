@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./block-editor/src/blocks/editor.scss"],"names":[],"mappings":"AAAA;EACE,cAAc;EACd,eAAe;EACf,iBAAiB;EACjB,kBAAkB","file":"editor.css","sourcesContent":[".wp-block-videogram__invalid-feedback {\n  color: #f11616;\n  font-size: 1rem;\n  margin-top: -1rem;\n  margin-bottom: 5px;\n}\n"],"sourceRoot":""}
