@@ -43,16 +43,16 @@ class Videogram_WPGraphQL {
 	 */
 	public $fields = [
 		[
-			'name'        => 'color',
+			'name'        => 'embedded_code',
 			'type'        => 'String',
 			'post_type'   => 'Video',
-			'description' => 'Its a color of the post',
+			'description' => 'Embedded code of the video',
 		],
 		[
-			'name'        => 'velicina',
-			'post_type'   => 'Video',
+			'name'        => 'length',
 			'type'        => 'String',
-			'description' => 'Velicina posta!',
+			'post_type'   => 'Video',
+			'description' => 'Length of the video',
 		],
 	];
 
@@ -111,9 +111,9 @@ class Videogram_WPGraphQL {
 				[
 					'type'        => $field['type'],
 					'description' => $field['description'],
-					'resolve'     => function( $post ) {
-						$field = get_post_meta( $post->ID, $field['name'], true );
-						return $field;
+					'resolve'     => function( $post ) use ( $field ) {
+						$value = get_post_meta( $post->ID, $field['name'], true );
+						return $value;
 					},
 				]
 			);

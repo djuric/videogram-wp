@@ -122,6 +122,7 @@ class Videogram {
 		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'editor_assets' );
 		$this->loader->add_action( 'init', $plugin_admin, 'register_post_types' );
 		$this->loader->add_action( 'init', $plugin_admin, 'register_taxonomies' );
+		$this->loader->add_action( 'init', $plugin_admin, 'register_fields' );
 		$this->loader->add_action( 'after_setup_theme', $plugin_admin, 'register_menus' );
 
 	}

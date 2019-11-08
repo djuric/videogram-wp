@@ -18,10 +18,14 @@ registerBlockType('videogram/video', {
   attributes: {
     embeddedCode: {
       type: 'string',
+      source: 'meta',
+      meta: 'embedded_code',
       default: ''
     },
     length: {
       type: 'string',
+      source: 'meta',
+      meta: 'length',
       default: ''
     }
   },

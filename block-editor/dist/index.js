@@ -184,10 +184,14 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('vid
   attributes: {
     embeddedCode: {
       type: 'string',
+      source: 'meta',
+      meta: 'embedded_code',
       default: ''
     },
     length: {
       type: 'string',
+      source: 'meta',
+      meta: 'length',
       default: ''
     }
   },

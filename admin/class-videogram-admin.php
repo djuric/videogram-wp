@@ -34,6 +34,26 @@ class Videogram_Admin {
 	private $version;
 
 	/**
+	 * Fields for API access
+	 * 
+	 * @var array Fields to register.
+	 */
+	private $fields = [
+		[
+			'post_type' => VIDEOGRAM_VIDEO_POST_TYPE,
+			'meta_key'  => 'embedded_code',
+			'type'      => 'string',
+			'single'    => true,
+		],
+		[
+			'post_type' => VIDEOGRAM_VIDEO_POST_TYPE,
+			'meta_key'  => 'length',
+			'type'      => 'string',
+			'single'    => true,
+		],
+	];
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -163,6 +183,25 @@ class Videogram_Admin {
 				'videogram_header_main' => __( 'VideoGram Header Primary', 'videoegram' ),
 			]
 		);
+
+	}
+
+	/**
+	 * Register custom fields for API access
+	 */
+	public function register_fields() {
+
+		foreach ( $this->fields as $field ) {
+			register_post_meta(
+				$field['post_type'],
+				$field['meta_key'],
+				[
+					'show_in_rest' => true,
+					'single'       => $field['single'],
+					'type'         => $field['type'],
+				]
+			);
+		}
 
 	}
 
