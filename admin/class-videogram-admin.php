@@ -151,7 +151,9 @@ class Videogram_Admin {
 				'show_in_rest'       => true,
 				'template'           => [
 					[ 'videogram/video' ],
+					[ 'videogram/excerpt' ],
 				],
+				'template_lock'      => 'all',
 			]
 		);
 	}
