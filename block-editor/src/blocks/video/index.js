@@ -12,7 +12,7 @@ import edit from './edit';
 registerBlockType('videogram/video', {
   title: __('Video'),
   description: __('Video block'),
-  icon: 'smiley',
+  icon: 'format-video',
   category: 'common',
 
   attributes: {
