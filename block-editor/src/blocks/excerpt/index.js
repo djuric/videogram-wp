@@ -15,8 +15,5 @@ registerBlockType('videogram/excerpt', {
   icon: 'excerpt-view',
   category: 'common',
 
-  edit,
-  save() {
-    return null;
-  }
+  edit
 });

@@ -36,8 +36,5 @@ registerBlockType('videogram/video', {
     }
   },
 
-  edit,
-  save() {
-    return null;
-  }
+  edit
 });
