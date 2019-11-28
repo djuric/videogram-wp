@@ -150,8 +150,8 @@ class Videogram_Admin {
 				'supports'           => [ 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments' ],
 				'show_in_rest'       => true,
 				'template'           => [
-					[ 'videogram/video' ],
 					[ 'videogram/excerpt' ],
+					[ 'videogram/video' ],
 				],
 				'template_lock'      => 'all',
 			]
