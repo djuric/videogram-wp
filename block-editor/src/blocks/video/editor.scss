@@ -1,0 +1,6 @@
+.wp-block-videogram-video {
+  .components-toggle-control {
+    /* Fix for inherited 1.8 line-height from .editor-styles-wrapper which shouldn't be inherited. */
+    line-height: 1.4;
+  }
+}

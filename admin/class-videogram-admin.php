@@ -51,6 +51,12 @@ class Videogram_Admin {
 			'type'      => 'string',
 			'single'    => true,
 		],
+		[
+			'post_type' => VIDEOGRAM_VIDEO_POST_TYPE,
+			'meta_key'  => 'featured',
+			'type'      => 'boolean',
+			'single'    => true,
+		],
 	];
 
 	/**

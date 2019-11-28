@@ -54,6 +54,12 @@ class Videogram_WPGraphQL {
 			'post_type'   => 'Video',
 			'description' => 'Length of the video',
 		],
+		[
+			'name'        => 'featured',
+			'type'        => 'Boolean',
+			'post_type'   => 'Video',
+			'description' => 'Whether this video is featured',
+		],
 	];
 
 	/**

@@ -2,11 +2,15 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { TextControl, TextareaControl } from '@wordpress/components';
+import {
+  TextControl,
+  TextareaControl,
+  ToggleControl
+} from '@wordpress/components';
 
 export default props => {
   const {
-    attributes: { embeddedCode, length },
+    attributes: { embeddedCode, length, featured },
     setAttributes,
     className
   } = props;
@@ -23,6 +27,11 @@ export default props => {
         label={__('Video length')}
         value={length}
         onChange={length => setAttributes({ length })}
+      />
+      <ToggleControl
+        label={__('Featured Video')}
+        checked={featured}
+        onChange={featured => setAttributes({ featured })}
       />
     </div>
   );

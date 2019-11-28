@@ -27,6 +27,12 @@ registerBlockType('videogram/video', {
       source: 'meta',
       meta: 'length',
       default: ''
+    },
+    featured: {
+      type: 'boolean',
+      source: 'meta',
+      meta: 'featured',
+      default: false
     }
   },
 
