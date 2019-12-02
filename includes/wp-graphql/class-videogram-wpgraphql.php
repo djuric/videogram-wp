@@ -41,26 +41,16 @@ class Videogram_WPGraphQL {
 	 *
 	 * @var array
 	 */
-	public $fields = [
-		[
-			'name'        => 'embedded_code',
-			'type'        => 'String',
-			'post_type'   => 'Video',
-			'description' => 'Embedded code of the video',
-		],
-		[
-			'name'        => 'length',
-			'type'        => 'String',
-			'post_type'   => 'Video',
-			'description' => 'Length of the video',
-		],
-		[
-			'name'        => 'featured',
-			'type'        => 'Boolean',
-			'post_type'   => 'Video',
-			'description' => 'Whether this video is featured',
-		],
-	];
+	public $fields = [];
+
+	/**
+	 * Initial setup
+	 */
+	public function __construct() {
+
+		$this->fields = get_video_fields_graphql();
+
+	}
 
 	/**
 	 * Register post types
@@ -81,6 +71,7 @@ class Videogram_WPGraphQL {
 		}
 
 		return $args;
+		
 	}
 
 	/**
