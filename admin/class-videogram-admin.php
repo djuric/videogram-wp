@@ -188,7 +188,7 @@ class Videogram_Admin {
 
 		register_nav_menus(
 			[
-				'videogram_header_main' => __( 'VideoGram Header Primary', 'videoegram' ),
+				'videogram_header_main' => __( 'VideoGram Header Primary', 'videogram' ),
 			]
 		);
 
