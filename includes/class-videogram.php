@@ -58,6 +58,7 @@ class Videogram {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->wpgraphql();
+		$this->meks_video_import();
 
 	}
 
@@ -92,6 +93,11 @@ class Videogram {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/fields.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/class-videogram-wpgraphql.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/meta-query-featured.php';
+
+		/**
+		 * Integrate with Meks Video Import
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/meks-video-import/class-videogram-meks-videoimport.php';
 
 		$this->loader = new Videogram_Loader();
 
@@ -139,6 +145,16 @@ class Videogram {
 		$this->loader->add_action( 'graphql_register_types', $wpgraphql, 'register_fields' );
 		$this->loader->add_action( 'register_post_type_args', $wpgraphql, 'expose_post_type', 10, 2 );
 		$this->loader->add_action( 'register_taxonomy_args', $wpgraphql, 'expose_taxonomy', 10, 2 );
+	}
+
+	/**
+	 * Initialize Meks Video Import
+	 */
+	private function meks_video_import() {
+
+		$meks_video_import = new Videogram_Meks_VideoImport();
+		
+		$this->loader->add_action( 'save_post_' . VIDEOGRAM_VIDEO_POST_TYPE, $meks_video_import, 'append_video_meta', 10, 1 );
 	}
 
 	/**
