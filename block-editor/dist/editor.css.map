@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./block-editor/src/blocks/video/editor.scss"],"names":[],"mappings":"AAAA;EAEI;EACA,gBAAgB","file":"editor.css","sourcesContent":[".wp-block-videogram-video {\n  .components-toggle-control {\n    /* Fix for inherited 1.8 line-height from .editor-styles-wrapper which shouldn't be inherited. */\n    line-height: 1.4;\n  }\n}\n"],"sourceRoot":""}
