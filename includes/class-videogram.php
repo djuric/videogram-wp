@@ -90,7 +90,7 @@ class Videogram {
 		/**
 		 * Integration with WPGraphQL
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/video-fields.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/post-fields.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/class-videogram-wpgraphql.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/meta-query-featured.php';
 
