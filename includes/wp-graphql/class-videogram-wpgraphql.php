@@ -99,7 +99,7 @@ class Videogram_WPGraphQL {
 	/**
 	 * Register custom fields
 	 */
-	public function register_fields() {
+	public function register_post_fields() {
 
 		foreach ( $this->fields as $field ) {
 			register_graphql_field(

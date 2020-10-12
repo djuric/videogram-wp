@@ -142,7 +142,7 @@ class Videogram {
 
 		$wpgraphql = new Videogram_WPGraphQL();
 
-		$this->loader->add_action( 'graphql_register_types', $wpgraphql, 'register_fields' );
+		$this->loader->add_action( 'graphql_register_types', $wpgraphql, 'register_post_fields' );
 		$this->loader->add_action( 'register_post_type_args', $wpgraphql, 'expose_post_type', 10, 2 );
 		$this->loader->add_action( 'register_taxonomy_args', $wpgraphql, 'expose_taxonomy', 10, 2 );
 	}
