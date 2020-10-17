@@ -91,6 +91,7 @@ class Videogram {
 		 * Integration with WPGraphQL
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/post-fields.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/user-fields.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/class-videogram-wpgraphql.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-graphql/meta-query-featured.php';
 
@@ -143,8 +144,10 @@ class Videogram {
 		$wpgraphql = new Videogram_WPGraphQL();
 
 		$this->loader->add_action( 'graphql_register_types', $wpgraphql, 'register_post_fields' );
+		$this->loader->add_action( 'graphql_register_types', $wpgraphql, 'register_user_fields' );
 		$this->loader->add_action( 'register_post_type_args', $wpgraphql, 'expose_post_type', 10, 2 );
 		$this->loader->add_action( 'register_taxonomy_args', $wpgraphql, 'expose_taxonomy', 10, 2 );
+		$this->loader->add_action( 'graphql_register_types', $wpgraphql, 'register_mutation');
 	}
 
 	/**

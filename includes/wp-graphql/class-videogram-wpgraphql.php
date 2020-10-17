@@ -5,10 +5,13 @@
  * @package Videogram
  */
 
+use GraphQL\Error\Error;
+
 /**
  * Common class to attach new data to WP Graphql
  */
 class Videogram_WPGraphQL {
+
 
 	/**
 	 * Post type to expose
@@ -25,7 +28,7 @@ class Videogram_WPGraphQL {
 
 	/**
 	 * Taxonomies to expose
-	 * 
+	 *
 	 * @var array
 	 */
 	public $taxonomies = [
@@ -44,11 +47,19 @@ class Videogram_WPGraphQL {
 	public $fields = [];
 
 	/**
+	 * User fields to expose
+	 *
+	 * @var array
+	 */
+	public $user_fields = [];
+
+	/**
 	 * Initial setup
 	 */
 	public function __construct() {
 
-		$this->fields = get_video_fields_graphql();
+		$this->fields      = get_video_fields_graphql();
+		$this->user_fields = get_user_fields_graphql();
 
 	}
 
@@ -71,12 +82,12 @@ class Videogram_WPGraphQL {
 		}
 
 		return $args;
-		
+
 	}
 
 	/**
 	 * Register taxonomies
-	 * 
+	 *
 	 * @param array  $args Taxonomy args.
 	 * @param string $taxonomy Taxonomy name.
 	 *
@@ -108,7 +119,7 @@ class Videogram_WPGraphQL {
 				[
 					'type'        => $field['type'],
 					'description' => $field['description'],
-					'resolve'     => function( $post ) use ( $field ) {
+					'resolve'     => function ( $post ) use ( $field ) {
 						$value = get_post_meta( $post->ID, $field['name'], true );
 						return $value;
 					},
@@ -116,5 +127,107 @@ class Videogram_WPGraphQL {
 			);
 		}
 	}
+
+	/**
+	 * Register user fields
+	 */
+	public function register_user_fields() {
+
+		foreach ( $this->user_fields as $field ) {
+
+			$field_data = [
+				'type'        => $field['type'],
+				'description' => $field['description'],
+				'resolve'     => function ( $user ) use ( $field ) {
+					$current_user_id = get_current_user_id();
+
+					if ( $current_user_id !== $user->userId ) {
+						return [];
+					}
+
+					$value = get_user_meta( $user->userId, $field['name'], true );
+					return empty( $value ) ? [] : $value;
+				},
+            ];
+
+			register_graphql_field( 'User', $field['name'], $field_data );
+		}
+
+	}
+
+	/**
+	 * Register mutations.
+	 */
+	public function register_mutation() {
+
+		register_graphql_mutation(
+			'setFavorites',
+			[
+				'inputFields'         => [
+					'videoId' => [
+						'type'        => 'Int',
+						'description' => __( 'Video ID', 'videogram' ),
+                    ],
+					'insert'  => [
+						'type'        => 'Boolean',
+						'description' => __( 'Whether to add (true) or remove (false) video from favorites', 'videogram' ),
+                    ],
+                ],
+				'outputFields'        => [
+					'favorites' => [
+						'type'        => [
+							'list_of' => 'Int',
+                        ],
+						'description' => __( 'List of video IDs in favorites', 'videogram' ),
+						'resolve'     => function ( $payload, $args, $context, $info ) {
+							return isset( $payload['favorites'] ) ? $payload['favorites'] : [];
+						},
+                    ],
+                ],
+				'mutateAndGetPayload' => function ( $input, $context, $info ) {
+
+					$current_user_id = get_current_user_id();
+
+					if ( $current_user_id <= 0 ) {
+						throw new Error( __( 'You must be logged in to complete this action.', 'videogram' ) );
+					}
+
+					if ( empty( $input['videoId'] ) ) {
+						throw new Error( __( 'Video ID is required.', 'videogram' ) );
+					}
+
+					if ( ! is_bool( $input['insert'] ) ) {
+						throw new Error( __( 'Insert flag is required.', 'videogram' ) );
+					}
+
+					$favorites = get_user_meta( $current_user_id, 'favorites', true );
+					$favorites = empty( $favorites ) ? [] : $favorites;
+					$favorites_video_key = array_search( $input['videoId'], $favorites, true );
+
+					if ( $input['insert'] ) {
+						if ( false === $favorites_video_key ) {
+							$favorites[] = $input['videoId'];
+						} else {
+							throw new Error( __( 'Video is already added.', 'videogram' ) );
+						}
+					} else {
+						if ( false !== $favorites_video_key ) {
+							unset( $favorites[ $favorites_video_key ] );
+						} else {
+							throw new Error( __( 'Video is already deleted.', 'videogram' ) );
+						}
+					}
+
+					update_user_meta( $current_user_id, 'favorites', $favorites );
+
+					return [
+						'favorites' => $favorites,
+                    ];
+				},
+            ]
+		);
+
+	}
+
 
 }

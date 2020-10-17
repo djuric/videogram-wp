@@ -5,6 +5,8 @@
  * @package Videogram
  */
 
+use WPGraphQL\Types;
+
 /**
  * Default fields to register
  * 
@@ -14,10 +16,10 @@ function get_user_fields_graphql() {
 
 	$fields = [
 		[
-			'name'        => 'vg_favorites',
-			'type'        => 'String',
+			'name'        => 'favorites',
+			'type'        => [ 'list_of' => 'Int' ],
 			'description' => __( 'Video IDs which user added to favorites', 'videogram' ),
-		]
+		],
 	];
 
 	return $fields;
