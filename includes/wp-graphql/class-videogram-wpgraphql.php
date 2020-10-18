@@ -47,19 +47,11 @@ class Videogram_WPGraphQL {
 	public $fields = [];
 
 	/**
-	 * User fields to expose
-	 *
-	 * @var array
-	 */
-	public $user_fields = [];
-
-	/**
 	 * Initial setup
 	 */
 	public function __construct() {
 
 		$this->fields      = get_video_fields_graphql();
-		$this->user_fields = get_user_fields_graphql();
 
 	}
 
@@ -128,32 +120,27 @@ class Videogram_WPGraphQL {
 		}
 	}
 
-	/**
-	 * Register user fields
-	 */
-	public function register_user_fields() {
+    /**
+     * Register favorites user field
+     */
+    public function register_favorites_user_field() {
 
-		foreach ( $this->user_fields as $field ) {
+        register_graphql_field( 'User', 'favorites', [
+            'type' => [ 'list_of' => 'Int' ],
+            'description' => __( 'Video IDs which user added to favorites', 'videogram' ),
+            'resolve' => function ( $user ) {
+                $current_user_id = get_current_user_id();
 
-			$field_data = [
-				'type'        => $field['type'],
-				'description' => $field['description'],
-				'resolve'     => function ( $user ) use ( $field ) {
-					$current_user_id = get_current_user_id();
+                if ( $current_user_id !== $user->userId ) {
+                    return [];
+                }
 
-					if ( $current_user_id !== $user->userId ) {
-						return [];
-					}
+                $value = get_user_meta( $user->userId, 'favorites', true );
+                return empty( $value ) ? [] : $value;
+            }
+        ]);
 
-					$value = get_user_meta( $user->userId, $field['name'], true );
-					return empty( $value ) ? [] : $value;
-				},
-            ];
-
-			register_graphql_field( 'User', $field['name'], $field_data );
-		}
-
-	}
+    }
 
 	/**
 	 * Register mutations.
