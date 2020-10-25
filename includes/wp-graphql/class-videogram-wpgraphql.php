@@ -121,24 +121,28 @@ class Videogram_WPGraphQL {
 	}
 
     /**
-     * Register favorites user field
+     * Register favorites connection
      */
     public function register_favorites_user_field() {
 
-        register_graphql_field( 'User', 'favorites', [
-            'type' => [ 'list_of' => 'Int' ],
-            'description' => __( 'Video IDs which user added to favorites', 'videogram' ),
-            'resolve' => function ( $user ) {
-                $current_user_id = get_current_user_id();
+        register_graphql_connection(
+            [
+                'fromType'      => 'User',
+                'toType'        => 'Video',
+                'fromFieldName' => 'favorites',
+                'resolve'       => function( $event, $args, $context, $info ) {
+                    $connection = new \WPGraphQL\Data\Connection\PostObjectConnectionResolver( $event, $args, $context, $info, 'vgvideo' );
 
-                if ( $current_user_id !== $user->userId ) {
-                    return [];
-                }
+                    $favorites = get_user_meta( $event->userId, 'favorites', true );
+                    if ( ! is_array( $favorites ) || empty( $favorites ) ) {
+                        return [];
+                    }
 
-                $value = get_user_meta( $user->userId, 'favorites', true );
-                return empty( $value ) ? [] : $value;
-            }
-        ]);
+                    $connection->set_query_arg( 'post__in', $favorites );
+                    return $connection->get_connection();
+                },
+            ]
+        );
 
     }
 
