@@ -130,6 +130,12 @@ class Videogram_WPGraphQL {
                 'fromType'      => 'User',
                 'toType'        => 'Video',
                 'fromFieldName' => 'favorites',
+                'connectionArgs' => [
+                    'in' => [
+                        'type' => 'Int',
+                        'description' => __( 'Video ID to check against', 'videogram' ),
+                    ]
+                ],
                 'resolve'       => function( $event, $args, $context, $info ) {
                     $connection = new \WPGraphQL\Data\Connection\PostObjectConnectionResolver( $event, $args, $context, $info, 'vgvideo' );
 
@@ -138,7 +144,16 @@ class Videogram_WPGraphQL {
                         return [];
                     }
 
-                    $connection->set_query_arg( 'post__in', $favorites );
+                    if( isset( $args['where']['in'] ) ) {
+                        if( in_array( $args['where']['in'], $favorites, true )) {
+                            $connection->set_query_arg( 'post__in', [$args['where']['in']] );
+                        } else {
+                            return [];
+                        }
+                    } else {
+                        $connection->set_query_arg( 'post__in', $favorites );
+                    }
+
                     return $connection->get_connection();
                 },
             ]
