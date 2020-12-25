@@ -139,6 +139,10 @@ class Videogram_WPGraphQL {
                 'resolve'       => function( $event, $args, $context, $info ) {
                     $connection = new \WPGraphQL\Data\Connection\PostObjectConnectionResolver( $event, $args, $context, $info, 'vgvideo' );
 
+                    if ( get_current_user_id() !== $event->userId ) {
+                        return [];
+                    }
+
                     $favorites = get_user_meta( $event->userId, 'favorites', true );
                     if ( ! is_array( $favorites ) || empty( $favorites ) ) {
                         return [];
