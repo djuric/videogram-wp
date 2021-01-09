@@ -145,7 +145,9 @@ class Videogram_WPGraphQL {
 
                     $favorites = get_user_meta( $event->userId, 'favorites', true );
                     if ( ! is_array( $favorites ) || empty( $favorites ) ) {
-                        return [];
+                        return [
+                            'edges' => []
+                        ];
                     }
 
                     if( isset( $args['where']['in'] ) ) {
